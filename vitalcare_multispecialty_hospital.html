@@ -1,0 +1,3500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VitalCare Multispecialty Hospital — Healthcare &amp; Appointment Portal</title>
+
+  <!-- Google Font: Inter for crisp clinical legibility across desktop and mobile -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* === 1. CSS VARIABLES & BASE RESET === */
+    :root {
+      --teal-primary: #0f766e;
+      --teal-dark: #115e59;
+      --teal-light: #ccfbf1;
+      --medical-blue: #0284c7;
+      --medical-blue-dark: #0369a1;
+      --slate-dark: #0f172a;
+      --slate-medium: #334155;
+      --slate-muted: #64748b;
+      --bg-white: #ffffff;
+      --bg-soft: #f0fdfa;
+      --bg-gray: #f8fafc;
+      --border-light: #cbd5e1;
+      --emergency-red: #dc2626;
+      --emergency-red-dark: #b91c1c;
+      --emergency-soft: #fef2f2;
+      --success-green: #16a34a;
+      --shadow-card: 0 4px 16px rgba(15, 23, 42, 0.08);
+      --radius-card: 12px;
+      --radius-btn: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background-color: var(--bg-white);
+      color: var(--slate-dark);
+      line-height: 1.6;
+    }
+
+    /* === 2. TOP EMERGENCY ALERT STRIP & STICKY NAVIGATION === */
+    .emergency-top-strip {
+      background-color: var(--emergency-red);
+      color: #ffffff;
+      padding: 8px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .strip-info-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .trauma-pill {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .strip-call-btn {
+      background-color: #ffffff;
+      color: var(--emergency-red);
+      border: none;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .strip-call-btn:hover {
+      background-color: #fee2e2;
+    }
+
+    .navbar {
+      background-color: var(--slate-dark);
+      color: #ffffff;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(15, 23, 42, 0.22);
+    }
+
+    .brand-logo-btn {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 21px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .brand-logo-btn:hover {
+      color: #5eead4;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #f1f5f9;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      padding: 8px 12px;
+      border-radius: var(--radius-btn);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      background-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .nav-btn-cta {
+      background-color: var(--teal-primary);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .nav-btn-cta:hover {
+      background-color: var(--medical-blue);
+    }
+
+    /* Mobile Hamburger Button (Hidden on Desktop) */
+    .hamburger-btn {
+      display: none;
+      background-color: var(--teal-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-btn);
+      padding: 8px 14px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* === 3. REUSABLE BUTTONS & SECTION CONTAINERS === */
+    .btn {
+      display: inline-block;
+      background-color: var(--teal-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-btn);
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--teal-dark);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-blue {
+      background-color: var(--medical-blue);
+      color: #ffffff;
+    }
+
+    .btn-blue:hover {
+      background-color: var(--medical-blue-dark);
+    }
+
+    .btn-outline {
+      background-color: #ffffff;
+      color: var(--teal-primary);
+      border: 2px solid var(--teal-primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--teal-primary);
+      color: #ffffff;
+    }
+
+    .btn-red {
+      background-color: var(--emergency-red);
+      color: #ffffff;
+    }
+
+    .btn-red:hover {
+      background-color: var(--emergency-red-dark);
+    }
+
+    .section {
+      padding: 72px 20px;
+    }
+
+    .section-soft {
+      background-color: var(--bg-soft);
+    }
+
+    .section-gray {
+      background-color: var(--bg-gray);
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--slate-dark);
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: var(--slate-muted);
+      max-width: 700px;
+      margin: 0 auto 32px auto;
+    }
+
+    .flex-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    /* === 4. HERO BANNER SECTION (#home) === */
+    .hero-section {
+      position: relative;
+      min-height: 500px;
+      background-color: var(--teal-dark);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 88px 20px;
+      overflow: hidden;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(15, 118, 110, 0.86), rgba(2, 132, 199, 0.78));
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .hero-content h1 {
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      color: #f0fdfa;
+      margin-bottom: 30px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .hero-cta-row .btn {
+      padding: 14px 26px;
+      font-size: 15px;
+    }
+
+    /* === 5. HOSPITAL INFORMATION & STATS (#about) === */
+    .about-overview-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .about-text-col {
+      flex: 1 1 540px;
+    }
+
+    .about-text-col h3 {
+      font-size: 24px;
+      color: var(--teal-dark);
+      margin-bottom: 12px;
+    }
+
+    .about-text-col p {
+      font-size: 15px;
+      color: var(--slate-medium);
+      margin-bottom: 14px;
+    }
+
+    .accreditation-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .acc-pill {
+      background-color: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .about-img-col {
+      flex: 1 1 360px;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 240px;
+      background-color: #cbd5e1;
+    }
+
+    .about-img-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .stat-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-top: 4px solid var(--teal-primary);
+      border-radius: var(--radius-card);
+      width: 265px;
+      max-width: 100%;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .stat-icon {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .stat-number {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--teal-dark);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-muted);
+    }
+
+    /* === 6. FILTER BARS & LIVE COUNTERS === */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .filter-btn {
+      background-color: var(--bg-white);
+      color: var(--slate-dark);
+      border: 1px solid var(--border-light);
+      padding: 9px 18px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--teal-primary);
+      color: var(--teal-primary);
+    }
+
+    .filter-btn.active {
+      background-color: var(--teal-primary);
+      color: #ffffff;
+      border-color: var(--teal-primary);
+    }
+
+    .live-counter {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--medical-blue-dark);
+      margin-bottom: 28px;
+    }
+
+    /* === 7. MEDICAL DEPARTMENTS CARDS (#departments) === */
+    .dept-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-card);
+      width: 360px;
+      max-width: 100%;
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .dept-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    .dept-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .dept-icon-box {
+      width: 50px;
+      height: 50px;
+      background-color: var(--teal-light);
+      color: var(--teal-dark);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+
+    .category-badge {
+      background-color: #e0f2fe;
+      color: var(--medical-blue-dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .dept-card h3 {
+      font-size: 20px;
+      color: var(--slate-dark);
+      margin-bottom: 6px;
+    }
+
+    .dept-subtitle {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal-primary);
+      margin-bottom: 10px;
+    }
+
+    .dept-card p {
+      font-size: 14px;
+      color: var(--slate-muted);
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .card-btn-pair {
+      display: flex;
+      gap: 10px;
+    }
+
+    .card-btn-pair .btn {
+      flex: 1;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+
+    /* === 8. DOCTOR PROFILES CARDS (#doctors) === */
+    .doctor-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-card);
+      width: 350px;
+      max-width: 100%;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .doctor-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    }
+
+    .doctor-img-wrap {
+      position: relative;
+      height: 225px;
+      background-color: #cbd5e1;
+      overflow: hidden;
+    }
+
+    .doctor-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .doctor-fee-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background-color: var(--slate-dark);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 8px;
+    }
+
+    .doctor-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .doctor-specialty-pill {
+      display: inline-block;
+      align-self: flex-start;
+      background-color: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .doctor-body h3 {
+      font-size: 20px;
+      color: var(--slate-dark);
+      margin-bottom: 4px;
+    }
+
+    .doctor-degree {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--medical-blue-dark);
+      margin-bottom: 10px;
+    }
+
+    .doctor-meta-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--slate-medium);
+      background-color: var(--bg-gray);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .doctor-meta-list li {
+      margin-bottom: 4px;
+    }
+
+    .doctor-meta-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* === 9. MEDICAL SERVICES & DIAGNOSTIC PACKAGES (#services) === */
+    .service-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-card);
+      width: 268px;
+      max-width: 100%;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .service-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .service-icon {
+      font-size: 28px;
+      background-color: #e0f2fe;
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-price-tag {
+      background-color: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 18px;
+      color: var(--slate-dark);
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--slate-muted);
+      margin-bottom: 18px;
+    }
+
+    .service-toggle-btn {
+      width: 100%;
+      padding: 11px;
+    }
+
+    .service-toggle-btn.added {
+      background-color: var(--success-green);
+      color: #ffffff;
+    }
+
+    .service-toggle-btn.added:hover {
+      background-color: #15803d;
+    }
+
+    /* === 10. HEALTH INFORMATION & INTERACTIVE BMI CALCULATOR (#health-info) === */
+    .guide-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-card);
+      width: 360px;
+      max-width: 100%;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .guide-img-wrap {
+      height: 190px;
+      background-color: #cbd5e1;
+      overflow: hidden;
+    }
+
+    .guide-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .guide-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .guide-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--teal-primary);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .guide-body h3 {
+      font-size: 19px;
+      color: var(--slate-dark);
+      margin-bottom: 8px;
+    }
+
+    .guide-body p {
+      font-size: 14px;
+      color: var(--slate-muted);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    /* Creative Lab Bonus Widget: Interactive BMI Calculator */
+    .bmi-widget-box {
+      max-width: 820px;
+      margin: 44px auto 0 auto;
+      background-color: var(--bg-white);
+      border: 2px solid var(--teal-primary);
+      border-radius: var(--radius-card);
+      padding: 30px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .bmi-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .bmi-bonus-badge {
+      display: inline-block;
+      background-color: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    .bmi-header h3 {
+      font-size: 24px;
+      color: var(--slate-dark);
+      margin-bottom: 6px;
+    }
+
+    .bmi-header p {
+      font-size: 14px;
+      color: var(--slate-muted);
+    }
+
+    .bmi-inputs-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .bmi-field {
+      flex: 1 1 200px;
+    }
+
+    .bmi-field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-dark);
+      margin-bottom: 6px;
+    }
+
+    .bmi-actions {
+      display: flex;
+      gap: 10px;
+      flex: 1 1 220px;
+    }
+
+    .bmi-actions .btn {
+      flex: 1;
+      padding: 11px 14px;
+    }
+
+    .bmi-result-panel {
+      display: none;
+      background-color: var(--bg-gray);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-top: 14px;
+    }
+
+    .bmi-result-panel.visible {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .bmi-score-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .bmi-score-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--slate-dark);
+    }
+
+    .bmi-category-badge {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      color: #ffffff;
+    }
+
+    .bmi-advice-text {
+      font-size: 14px;
+      color: var(--slate-medium);
+    }
+
+    /* === 11. EMERGENCY CONTACTS & QUICK HELPLINE (#emergency) === */
+    .emergency-section {
+      background-color: #fff1f2;
+      border-top: 2px solid #fecdd3;
+      border-bottom: 2px solid #fecdd3;
+    }
+
+    .emergency-card {
+      background-color: var(--bg-white);
+      border: 1px solid #fecaca;
+      border-left: 5px solid var(--emergency-red);
+      border-radius: var(--radius-card);
+      width: 268px;
+      max-width: 100%;
+      padding: 22px 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .emergency-card h3 {
+      font-size: 18px;
+      color: var(--slate-dark);
+      margin-bottom: 6px;
+    }
+
+    .emergency-number {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--emergency-red);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .emergency-card p {
+      font-size: 13px;
+      color: var(--slate-muted);
+      margin-bottom: 16px;
+    }
+
+    .emergency-btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .copy-num-btn.copied {
+      background-color: var(--success-green);
+      border-color: var(--success-green);
+      color: #ffffff;
+    }
+
+    /* === 12. APPOINTMENT BOOKING & PRINTABLE SLIP (#booking) === */
+    .selection-banner {
+      background-color: var(--teal-light);
+      border: 1px solid var(--teal-primary);
+      color: var(--teal-dark);
+      padding: 14px 18px;
+      border-radius: var(--radius-btn);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .booking-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    .booking-form-card {
+      flex: 1 1 580px;
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .booking-summary-col {
+      flex: 1 1 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .form-group {
+      flex: 1 1 220px;
+      margin-bottom: 16px;
+    }
+
+    .form-group-full {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .form-group label,
+    .form-group-full > label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-dark);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-btn);
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--slate-dark);
+      background-color: #ffffff;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--teal-primary);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.16);
+    }
+
+    /* 2-Way Synced Service Checkboxes */
+    .service-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .service-check-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--bg-gray);
+      border: 1px solid var(--border-light);
+      padding: 10px 14px;
+      border-radius: var(--radius-btn);
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .service-check-item:hover {
+      border-color: var(--teal-primary);
+    }
+
+    .service-check-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+    }
+
+    .service-check-left input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--teal-primary);
+      cursor: pointer;
+    }
+
+    .service-check-price {
+      font-weight: 700;
+      color: var(--teal-dark);
+      font-size: 13px;
+    }
+
+    .form-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .form-btn-row .btn {
+      flex: 1 1 180px;
+      padding: 13px;
+      font-size: 15px;
+    }
+
+    .inline-error {
+      display: none;
+      background-color: var(--emergency-soft);
+      border: 1px solid var(--emergency-red);
+      color: var(--emergency-red-dark);
+      padding: 11px 14px;
+      border-radius: var(--radius-btn);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    /* Live Fee Summary Box */
+    .fee-summary-card {
+      background-color: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-card);
+      padding: 26px;
+      box-shadow: var(--shadow-card);
+      transition: border-color 0.25s ease, background-color 0.25s ease;
+    }
+
+    .fee-summary-card.highlighted {
+      border-color: var(--teal-primary);
+      background-color: var(--bg-soft);
+    }
+
+    .fee-summary-card h3 {
+      font-size: 20px;
+      color: var(--slate-dark);
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .fee-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+
+    .fee-line span:last-child {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .fee-grand-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--slate-dark);
+      border-top: 2px solid var(--border-light);
+      padding-top: 14px;
+      margin-top: 12px;
+    }
+
+    .fee-grand-total span:last-child {
+      color: var(--teal-primary);
+    }
+
+    /* Printable Hospital Appointment Slip */
+    .slip-card {
+      display: none;
+      background-color: var(--bg-white);
+      border: 2px dashed var(--teal-primary);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .slip-card.visible {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slip-header {
+      background-color: var(--teal-primary);
+      color: #ffffff;
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .slip-header h4 {
+      font-size: 18px;
+    }
+
+    .slip-id-pill {
+      background-color: rgba(15, 23, 42, 0.28);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .slip-body {
+      padding: 22px;
+    }
+
+    .slip-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border-light);
+      gap: 12px;
+    }
+
+    .slip-row span {
+      color: var(--slate-muted);
+    }
+
+    .slip-row strong {
+      color: var(--slate-dark);
+      text-align: right;
+    }
+
+    .slip-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .slip-actions .btn {
+      flex: 1 1 160px;
+      padding: 10px 14px;
+    }
+
+    /* === 13. SHARED MODAL POPUPS (DEPT, DOCTOR, HEALTH GUIDE, EMERGENCY) === */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(15, 23, 42, 0.72);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-card);
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-banner-img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      background-color: #cbd5e1;
+      display: block;
+    }
+
+    .modal-content {
+      padding: 24px;
+    }
+
+    .modal-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .modal-top-bar h3 {
+      font-size: 22px;
+      color: var(--slate-dark);
+    }
+
+    .modal-close-x {
+      background-color: var(--bg-gray);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      width: 34px;
+      height: 34px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--slate-dark);
+    }
+
+    .modal-close-x:hover {
+      background-color: #e2e8f0;
+    }
+
+    .modal-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .modal-pill {
+      background-color: var(--bg-soft);
+      border: 1px solid #99f6e4;
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      color: var(--slate-medium);
+      margin-bottom: 14px;
+    }
+
+    .modal-subheading {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--slate-dark);
+      margin-bottom: 8px;
+    }
+
+    .modal-list {
+      margin-left: 18px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: var(--slate-medium);
+    }
+
+    .modal-list li {
+      margin-bottom: 6px;
+    }
+
+    .modal-note-box {
+      background-color: var(--bg-gray);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--slate-dark);
+      margin-bottom: 18px;
+    }
+
+    .modal-footer-btns {
+      display: flex;
+      gap: 12px;
+    }
+
+    .modal-footer-btns .btn {
+      flex: 1;
+    }
+
+    .emergency-dispatch-success {
+      display: none;
+      background-color: #dcfce7;
+      border: 1px solid #16a34a;
+      color: #166534;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    /* === 14. FOOTER & FLOATING BACK-TO-TOP BUTTON === */
+    .footer {
+      background-color: var(--slate-dark);
+      color: #e2e8f0;
+      padding: 52px 20px 28px 20px;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .footer-col {
+      flex: 1 1 250px;
+    }
+
+    .footer-col h4 {
+      font-size: 18px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .footer-col p {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-link-btn {
+      background: none;
+      border: none;
+      color: #cbd5e1;
+      font-size: 14px;
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer;
+      padding: 2px 0;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link-btn:hover {
+      color: #5eead4;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .footer-lab-tag {
+      display: inline-block;
+      margin-top: 6px;
+      color: #5eead4;
+      font-weight: 600;
+    }
+
+    .floating-top-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: var(--teal-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      z-index: 999;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .floating-top-btn:hover {
+      background-color: var(--medical-blue);
+      transform: translateY(-2px);
+    }
+
+    /* === 15. RESPONSIVE MOBILE DESIGN & PRINT STYLES === */
+    @media (max-width: 768px) {
+      .emergency-top-strip {
+        justify-content: center;
+        text-align: center;
+      }
+
+      .navbar {
+        flex-wrap: wrap;
+        padding: 14px 18px;
+      }
+
+      .hamburger-btn {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-btn {
+        width: 100%;
+        text-align: left;
+      }
+
+      .hero-section {
+        min-height: 430px;
+        padding: 70px 16px;
+      }
+
+      .hero-content h1 {
+        font-size: 30px;
+      }
+
+      .hero-content p {
+        font-size: 16px;
+      }
+
+      .stat-card,
+      .dept-card,
+      .doctor-card,
+      .service-card,
+      .guide-card,
+      .emergency-card {
+        width: 100%;
+      }
+
+      .booking-form-card,
+      .fee-summary-card,
+      .bmi-widget-box {
+        padding: 20px;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #appointmentSlip,
+      #appointmentSlip * {
+        visibility: visible;
+      }
+      #appointmentSlip {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: 2px solid #000000;
+      }
+      .slip-actions {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- === 1. TOP EMERGENCY ALERT STRIP & STICKY NAVIGATION HEADER === -->
+  <div class="emergency-top-strip">
+    <div class="strip-info-group">
+      <span>&#128657; 24/7 Ambulance Helpline: <strong>108 / +1-800-911-8482</strong></span>
+      <span class="trauma-pill">&#9889; Trauma Unit: Open 24/7</span>
+    </div>
+    <button type="button" class="strip-call-btn" id="topEmergencyCallBtn">&#128222; Emergency Call</button>
+  </div>
+
+  <header class="navbar">
+    <button type="button" class="brand-logo-btn" id="brandLogoBtn" title="Scroll to top">
+      &#127973; VitalCare Hospital
+    </button>
+
+    <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle Navigation Menu">
+      &#9776;
+    </button>
+
+    <nav aria-label="Primary Hospital Navigation">
+      <ul class="nav-links" id="navLinks">
+        <li><button type="button" class="nav-btn" data-scroll="#home">Home</button></li>
+        <li><button type="button" class="nav-btn" data-scroll="#about">About</button></li>
+        <li><button type="button" class="nav-btn" data-scroll="#departments">Departments</button></li>
+        <li><button type="button" class="nav-btn" data-scroll="#doctors">Doctors</button></li>
+        <li><button type="button" class="nav-btn" data-scroll="#services">Services</button></li>
+        <li><button type="button" class="nav-btn" data-scroll="#health-info">Health Info</button></li>
+        <li><button type="button" class="nav-btn" data-scroll="#emergency">Emergency</button></li>
+        <li><button type="button" class="nav-btn nav-btn-cta" data-scroll="#booking">Book Appointment</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- === 2. HERO BANNER SECTION (#home) === -->
+    <section class="hero-section" id="home">
+      <img
+        src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1400&q=80"
+        alt="Modern VitalCare Multispecialty Hospital facility"
+        class="hero-bg-img"
+        onerror="this.onerror=null;this.src='https://placehold.co/1400x700/0f766e/ffffff?text=VitalCare+Multispecialty+Hospital'"
+      >
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <span class="hero-badge">&#10010; NABH &amp; JCI Accredited Multispecialty Healthcare</span>
+        <h1>Compassionate Care, Advanced Medicine</h1>
+        <p>
+          Delivering world-class diagnostics, specialized surgical excellence, and 24/7 emergency trauma support
+          with a patient-first commitment to healing and wellness.
+        </p>
+        <div class="hero-cta-row">
+          <button type="button" class="btn" id="heroBookBtn">Book Appointment</button>
+          <button type="button" class="btn btn-blue" id="heroExploreBtn">Explore Departments</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- === 3. HOSPITAL INFORMATION & KEY STATS (#about) === -->
+    <section class="section section-soft" id="about">
+      <div class="container">
+        <h2 class="section-title">About VitalCare Multispecialty Hospital</h2>
+        <p class="section-subtitle">
+          Trusted by over 120,000 families for ethical clinical practice, modern diagnostic technology, and personalized recovery care.
+        </p>
+
+        <div class="about-overview-card">
+          <div class="about-text-col">
+            <h3>Our Mission &amp; Clinical Excellence</h3>
+            <p>
+              Founded with the vision of making tertiary healthcare accessible and transparent,
+              <strong>VitalCare Multispecialty Hospital</strong> brings together board-certified specialists,
+              digital imaging suites, and modular operation theaters under one roof.
+            </p>
+            <p>
+              Every patient receives a dedicated care coordinator, electronic health records, and round-the-clock
+              intensive care monitoring to ensure safe, rapid recovery.
+            </p>
+            <div class="accreditation-tags">
+              <span class="acc-pill">&#10004; NABH Accredited</span>
+              <span class="acc-pill">&#10004; ISO 9001:2015 Certified Lab</span>
+              <span class="acc-pill">&#10004; Cashless Insurance Desk</span>
+            </div>
+          </div>
+
+          <div class="about-img-col">
+            <img
+              src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80"
+              alt="VitalCare Hospital medical team and patient care wing"
+              onerror="this.onerror=null;this.src='https://placehold.co/800x500/0f766e/ffffff?text=VitalCare+Clinical+Wing'"
+            >
+          </div>
+        </div>
+
+        <!-- 4 Clean Flexbox Stat Cards -->
+        <div class="flex-grid">
+          <div class="stat-card">
+            <div class="stat-icon">&#128657;</div>
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Emergency Care</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">&#129658;</div>
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Specialist Doctors</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">&#127973;</div>
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Medical Departments</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">&#128154;</div>
+            <div class="stat-number">99.2%</div>
+            <div class="stat-label">Patient Recovery</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === 4. MEDICAL DEPARTMENTS SECTION (#departments) === -->
+    <section class="section" id="departments">
+      <div class="container">
+        <h2 class="section-title">Medical Departments</h2>
+        <p class="section-subtitle">
+          Filter clinical centers by specialty group, inspect OPD timings and treatments, or select a department to book.
+        </p>
+
+        <!-- Category Filter Buttons -->
+        <div class="filter-bar">
+          <button type="button" class="filter-btn dept-filter-btn active" data-category="All">All Departments</button>
+          <button type="button" class="filter-btn dept-filter-btn" data-category="Heart & Neuro">Heart &amp; Neuro</button>
+          <button type="button" class="filter-btn dept-filter-btn" data-category="Bone & Child Care">Bone &amp; Child Care</button>
+          <button type="button" class="filter-btn dept-filter-btn" data-category="General & Diagnostics">General &amp; Diagnostics</button>
+        </div>
+
+        <!-- Live Department Counter -->
+        <p class="live-counter" id="deptCounterText">Showing 6 of 6 departments</p>
+
+        <!-- 6 Flexbox Department Cards -->
+        <div class="flex-grid" id="departmentsGrid">
+
+          <!-- 1. Cardiology -->
+          <article class="dept-card" data-category="Heart & Neuro">
+            <div class="dept-top-row">
+              <div class="dept-icon-box">&#10084;&#65039;</div>
+              <span class="category-badge">Heart &amp; Neuro</span>
+            </div>
+            <h3>Cardiology</h3>
+            <div class="dept-subtitle">Heart &amp; Vascular Care &bull; ECG, Echo, Angioplasty</div>
+            <p>Comprehensive cardiac diagnostics, interventional catheterization labs, hypertension clinics, and preventive heart rehabilitation.</p>
+            <div class="card-btn-pair">
+              <button type="button" class="btn btn-outline dept-info-btn" data-dept-id="cardiology">Department Info</button>
+              <button type="button" class="btn select-dept-btn" data-dept-value="Cardiology">Select Department</button>
+            </div>
+          </article>
+
+          <!-- 2. Neurology -->
+          <article class="dept-card" data-category="Heart & Neuro">
+            <div class="dept-top-row">
+              <div class="dept-icon-box">&#129504;</div>
+              <span class="category-badge">Heart &amp; Neuro</span>
+            </div>
+            <h3>Neurology</h3>
+            <div class="dept-subtitle">Brain &amp; Spine Center &bull; EEG, Stroke Unit, Neuro-Rehab</div>
+            <p>Rapid-response stroke ICU, epilepsy and migraine management, nerve conduction studies, and minimally invasive spine care.</p>
+            <div class="card-btn-pair">
+              <button type="button" class="btn btn-outline dept-info-btn" data-dept-id="neurology">Department Info</button>
+              <button type="button" class="btn select-dept-btn" data-dept-value="Neurology">Select Department</button>
+            </div>
+          </article>
+
+          <!-- 3. Orthopedics -->
+          <article class="dept-card" data-category="Bone & Child Care">
+            <div class="dept-top-row">
+              <div class="dept-icon-box">&#129460;</div>
+              <span class="category-badge">Bone &amp; Child Care</span>
+            </div>
+            <h3>Orthopedics</h3>
+            <div class="dept-subtitle">Joint &amp; Bone Care &bull; Sports Injury, Joint Replacement</div>
+            <p>Computer-assisted knee and hip replacements, arthroscopic sports medicine, fracture trauma care, and physiotherapy.</p>
+            <div class="card-btn-pair">
+              <button type="button" class="btn btn-outline dept-info-btn" data-dept-id="orthopedics">Department Info</button>
+              <button type="button" class="btn select-dept-btn" data-dept-value="Orthopedics">Select Department</button>
+            </div>
+          </article>
+
+          <!-- 4. Pediatrics -->
+          <article class="dept-card" data-category="Bone & Child Care">
+            <div class="dept-top-row">
+              <div class="dept-icon-box">&#128118;</div>
+              <span class="category-badge">Bone &amp; Child Care</span>
+            </div>
+            <h3>Pediatrics</h3>
+            <div class="dept-subtitle">Child &amp; Neonatal Care &bull; Vaccinations, Growth Clinic</div>
+            <p>Child-friendly outpatient clinics, Level-III NICU support, immunization schedules, and adolescent nutrition counseling.</p>
+            <div class="card-btn-pair">
+              <button type="button" class="btn btn-outline dept-info-btn" data-dept-id="pediatrics">Department Info</button>
+              <button type="button" class="btn select-dept-btn" data-dept-value="Pediatrics">Select Department</button>
+            </div>
+          </article>
+
+          <!-- 5. General Medicine -->
+          <article class="dept-card" data-category="General & Diagnostics">
+            <div class="dept-top-row">
+              <div class="dept-icon-box">&#129658;</div>
+              <span class="category-badge">General &amp; Diagnostics</span>
+            </div>
+            <h3>General Medicine</h3>
+            <div class="dept-subtitle">Primary &amp; Preventive Care &bull; Fever, Diabetes, Hypertension</div>
+            <p>Holistic internal medicine consultations for infectious fevers, thyroid and diabetes management, and executive health reviews.</p>
+            <div class="card-btn-pair">
+              <button type="button" class="btn btn-outline dept-info-btn" data-dept-id="general">Department Info</button>
+              <button type="button" class="btn select-dept-btn" data-dept-value="General Medicine">Select Department</button>
+            </div>
+          </article>
+
+          <!-- 6. Diagnostics & Radiology -->
+          <article class="dept-card" data-category="General & Diagnostics">
+            <div class="dept-top-row">
+              <div class="dept-icon-box">&#128300;</div>
+              <span class="category-badge">General &amp; Diagnostics</span>
+            </div>
+            <h3>Diagnostics &amp; Radiology</h3>
+            <div class="dept-subtitle">24/7 Lab, MRI, CT Scan &amp; Ultrasound</div>
+            <p>High-definition 3T MRI, 128-slice CT imaging, automated pathology lab, and same-day digital diagnostic reporting.</p>
+            <div class="card-btn-pair">
+              <button type="button" class="btn btn-outline dept-info-btn" data-dept-id="diagnostics">Department Info</button>
+              <button type="button" class="btn select-dept-btn" data-dept-value="Diagnostics & Radiology">Select Department</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === 5. DOCTOR PROFILES SECTION (#doctors) === -->
+    <section class="section section-gray" id="doctors">
+      <div class="container">
+        <h2 class="section-title">Our Specialist Doctors</h2>
+        <p class="section-subtitle">
+          Meet our experienced medical consultants. Filter by specialty, view credentials, or book directly with your chosen doctor.
+        </p>
+
+        <!-- Specialty Filter Buttons -->
+        <div class="filter-bar">
+          <button type="button" class="filter-btn doc-filter-btn active" data-specialty="All">All Doctors</button>
+          <button type="button" class="filter-btn doc-filter-btn" data-specialty="Cardiology">Cardiology</button>
+          <button type="button" class="filter-btn doc-filter-btn" data-specialty="Neurology">Neurology</button>
+          <button type="button" class="filter-btn doc-filter-btn" data-specialty="Orthopedics">Orthopedics</button>
+          <button type="button" class="filter-btn doc-filter-btn" data-specialty="Pediatrics">Pediatrics</button>
+          <button type="button" class="filter-btn doc-filter-btn" data-specialty="General Medicine">General Medicine</button>
+        </div>
+
+        <!-- Live Doctor Counter -->
+        <p class="live-counter" id="docCounterText">Showing 5 of 5 specialist doctors</p>
+
+        <!-- 5 Doctor Profile Cards -->
+        <div class="flex-grid" id="doctorsGrid">
+
+          <!-- Doctor 1: Dr. Arjun Mehta (Cardiology) -->
+          <article class="doctor-card" data-specialty="Cardiology">
+            <div class="doctor-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. Arjun Mehta Senior Cardiologist"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x450/0f766e/ffffff?text=Dr.+Arjun+Mehta'"
+              >
+              <span class="doctor-fee-badge">Fee: $60</span>
+            </div>
+            <div class="doctor-body">
+              <span class="doctor-specialty-pill">Cardiology</span>
+              <h3>Dr. Arjun Mehta</h3>
+              <div class="doctor-degree">MD, DM (Cardiology) &bull; Chief Interventional Cardiologist</div>
+              <ul class="doctor-meta-list">
+                <li><strong>Experience:</strong> 16+ Years</li>
+                <li><strong>Availability:</strong> Mon, Wed, Fri (10:00 AM – 4:00 PM)</li>
+              </ul>
+              <div class="card-btn-pair">
+                <button type="button" class="btn btn-outline view-doc-btn" data-doc-id="dr-mehta">View Profile</button>
+                <button type="button" class="btn btn-blue book-doc-btn" data-doc-value="Dr. Arjun Mehta" data-dept-value="Cardiology">Book Doctor</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Doctor 2: Dr. Priya Nair (Neurology) -->
+          <article class="doctor-card" data-specialty="Neurology">
+            <div class="doctor-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. Priya Nair Senior Neurologist"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x450/0f766e/ffffff?text=Dr.+Priya+Nair'"
+              >
+              <span class="doctor-fee-badge">Fee: $65</span>
+            </div>
+            <div class="doctor-body">
+              <span class="doctor-specialty-pill">Neurology</span>
+              <h3>Dr. Priya Nair</h3>
+              <div class="doctor-degree">MD, DM (Neurology) &bull; Head of Neuro-Sciences</div>
+              <ul class="doctor-meta-list">
+                <li><strong>Experience:</strong> 14+ Years</li>
+                <li><strong>Availability:</strong> Tue, Thu, Sat (11:00 AM – 5:00 PM)</li>
+              </ul>
+              <div class="card-btn-pair">
+                <button type="button" class="btn btn-outline view-doc-btn" data-doc-id="dr-nair">View Profile</button>
+                <button type="button" class="btn btn-blue book-doc-btn" data-doc-value="Dr. Priya Nair" data-dept-value="Neurology">Book Doctor</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Doctor 3: Dr. Vikram Rao (Orthopedics) -->
+          <article class="doctor-card" data-specialty="Orthopedics">
+            <div class="doctor-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. Vikram Rao Orthopedic Surgeon"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x450/0f766e/ffffff?text=Dr.+Vikram+Rao'"
+              >
+              <span class="doctor-fee-badge">Fee: $50</span>
+            </div>
+            <div class="doctor-body">
+              <span class="doctor-specialty-pill">Orthopedics</span>
+              <h3>Dr. Vikram Rao</h3>
+              <div class="doctor-degree">MBBS, MS (Orthopedics) &bull; Joint Replacement Surgeon</div>
+              <ul class="doctor-meta-list">
+                <li><strong>Experience:</strong> 12+ Years</li>
+                <li><strong>Availability:</strong> Mon, Tue, Thu, Sat (9:30 AM – 3:30 PM)</li>
+              </ul>
+              <div class="card-btn-pair">
+                <button type="button" class="btn btn-outline view-doc-btn" data-doc-id="dr-rao">View Profile</button>
+                <button type="button" class="btn btn-blue book-doc-btn" data-doc-value="Dr. Vikram Rao" data-dept-value="Orthopedics">Book Doctor</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Doctor 4: Dr. Sneha Kulkarni (Pediatrics) -->
+          <article class="doctor-card" data-specialty="Pediatrics">
+            <div class="doctor-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. Sneha Kulkarni Senior Pediatrician"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x450/0f766e/ffffff?text=Dr.+Sneha+Kulkarni'"
+              >
+              <span class="doctor-fee-badge">Fee: $45</span>
+            </div>
+            <div class="doctor-body">
+              <span class="doctor-specialty-pill">Pediatrics</span>
+              <h3>Dr. Sneha Kulkarni</h3>
+              <div class="doctor-degree">MBBS, MD (Pediatrics) &bull; Child &amp; Neonatal Specialist</div>
+              <ul class="doctor-meta-list">
+                <li><strong>Experience:</strong> 10+ Years</li>
+                <li><strong>Availability:</strong> Mon – Sat (10:00 AM – 6:00 PM)</li>
+              </ul>
+              <div class="card-btn-pair">
+                <button type="button" class="btn btn-outline view-doc-btn" data-doc-id="dr-kulkarni">View Profile</button>
+                <button type="button" class="btn btn-blue book-doc-btn" data-doc-value="Dr. Sneha Kulkarni" data-dept-value="Pediatrics">Book Doctor</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Doctor 5: Dr. Rohan Verma (General Medicine) -->
+          <article class="doctor-card" data-specialty="General Medicine">
+            <div class="doctor-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80"
+                alt="Dr. Rohan Verma General Physician"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x450/0f766e/ffffff?text=Dr.+Rohan+Verma'"
+              >
+              <span class="doctor-fee-badge">Fee: $40</span>
+            </div>
+            <div class="doctor-body">
+              <span class="doctor-specialty-pill">General Medicine</span>
+              <h3>Dr. Rohan Verma</h3>
+              <div class="doctor-degree">MBBS, MD (Internal Medicine) &bull; Senior Physician</div>
+              <ul class="doctor-meta-list">
+                <li><strong>Experience:</strong> 15+ Years</li>
+                <li><strong>Availability:</strong> Daily Mon – Sun (9:00 AM – 7:00 PM)</li>
+              </ul>
+              <div class="card-btn-pair">
+                <button type="button" class="btn btn-outline view-doc-btn" data-doc-id="dr-verma">View Profile</button>
+                <button type="button" class="btn btn-blue book-doc-btn" data-doc-value="Dr. Rohan Verma" data-dept-value="General Medicine">Book Doctor</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === 6. MEDICAL SERVICES & DIAGNOSTIC PACKAGES (#services) === -->
+    <section class="section" id="services">
+      <div class="container">
+        <h2 class="section-title">Medical Services &amp; Diagnostic Packages</h2>
+        <p class="section-subtitle">
+          Add preventive health screenings or lab packages to your visit. Selections sync automatically with the Appointment Booking form.
+        </p>
+
+        <div class="flex-grid">
+
+          <!-- Service 1 -->
+          <article class="service-card">
+            <div>
+              <div class="service-top">
+                <div class="service-icon">&#129656;</div>
+                <span class="service-price-tag">+$80</span>
+              </div>
+              <h3>Complete Full-Body Health Checkup</h3>
+              <p>Includes 45+ blood, liver, kidney, thyroid, lipid profile, and blood sugar biomarkers with physician review.</p>
+            </div>
+            <button type="button" class="btn service-toggle-btn" data-service-id="srv-fullbody">
+              + Add to Appointment
+            </button>
+          </article>
+
+          <!-- Service 2 -->
+          <article class="service-card">
+            <div>
+              <div class="service-top">
+                <div class="service-icon">&#128147;</div>
+                <span class="service-price-tag">+$60</span>
+              </div>
+              <h3>Cardiac Screening Package (ECG + Echo)</h3>
+              <p>12-lead digital Electrocardiogram (ECG), 2D Color Doppler Echocardiography, and lipid risk assessment.</p>
+            </div>
+            <button type="button" class="btn service-toggle-btn" data-service-id="srv-cardiac">
+              + Add to Appointment
+            </button>
+          </article>
+
+          <!-- Service 3 -->
+          <article class="service-card">
+            <div>
+              <div class="service-top">
+                <div class="service-icon">&#128301;</div>
+                <span class="service-price-tag">+$120</span>
+              </div>
+              <h3>Advanced MRI / CT Diagnostic Scan</h3>
+              <p>High-resolution 3T MRI or low-dose 128-slice CT scan with senior radiologist report within 4 hours.</p>
+            </div>
+            <button type="button" class="btn service-toggle-btn" data-service-id="srv-mri">
+              + Add to Appointment
+            </button>
+          </article>
+
+          <!-- Service 4 -->
+          <article class="service-card">
+            <div>
+              <div class="service-top">
+                <div class="service-icon">&#127968;</div>
+                <span class="service-price-tag">+$15</span>
+              </div>
+              <h3>Home Sample Collection &amp; Digital Report</h3>
+              <p>Certified phlebotomist doorstep sample pickup before your OPD visit with instant WhatsApp &amp; email reports.</p>
+            </div>
+            <button type="button" class="btn service-toggle-btn" data-service-id="srv-home">
+              + Add to Appointment
+            </button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === 7. HEALTH INFORMATION & INTERACTIVE BMI CALCULATOR (#health-info) === -->
+    <section class="section section-soft" id="health-info">
+      <div class="container">
+        <h2 class="section-title">Health Information &amp; Wellness Hub</h2>
+        <p class="section-subtitle">
+          Explore doctor-reviewed preventive health guides and check your Body Mass Index (BMI) with our interactive wellness calculator.
+        </p>
+
+        <!-- 3 Educational Health Awareness Cards -->
+        <div class="flex-grid">
+
+          <!-- Guide 1 -->
+          <article class="guide-card">
+            <div class="guide-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=800&q=80"
+                alt="Heart healthy nutrition and daily exercise"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x450/0f766e/ffffff?text=Heart-Healthy+Daily+Habits'"
+              >
+            </div>
+            <div class="guide-body">
+              <span class="guide-tag">Cardiology &bull; 4 Min Read</span>
+              <h3>Heart-Healthy Daily Habits</h3>
+              <p>Learn simple 30-minute brisk walking routines, sodium-balanced meals, and stress control techniques to protect cardiovascular health.</p>
+              <button type="button" class="btn btn-outline read-guide-btn" data-guide-id="guide-heart">Read Health Guide</button>
+            </div>
+          </article>
+
+          <!-- Guide 2 -->
+          <article class="guide-card">
+            <div class="guide-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80"
+                alt="Hydration and seasonal wellness habits"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x450/0284c7/ffffff?text=Seasonal+Immunity+%26+Hydration'"
+              >
+            </div>
+            <div class="guide-body">
+              <span class="guide-tag">General Medicine &bull; 3 Min Read</span>
+              <h3>Managing Seasonal Immunity &amp; Hydration</h3>
+              <p>Discover optimal daily electrolyte intake, vitamin-rich seasonal produce, and sleep hygiene tips to prevent viral infections.</p>
+              <button type="button" class="btn btn-outline read-guide-btn" data-guide-id="guide-immunity">Read Health Guide</button>
+            </div>
+          </article>
+
+          <!-- Guide 3 -->
+          <article class="guide-card">
+            <div class="guide-img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80"
+                alt="Annual preventive health screening diagnostics"
+                onerror="this.onerror=null;this.src='https://placehold.co/800x450/0f766e/ffffff?text=Annual+Preventive+Screenings'"
+              >
+            </div>
+            <div class="guide-body">
+              <span class="guide-tag">Preventive Care &bull; 5 Min Read</span>
+              <h3>Importance of Annual Preventive Screenings</h3>
+              <p>Why early blood sugar, lipid panel, and blood pressure checks after age 25 help detect silent conditions before symptoms appear.</p>
+              <button type="button" class="btn btn-outline read-guide-btn" data-guide-id="guide-screening">Read Health Guide</button>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Creative Lab Bonus Widget: Interactive BMI & Wellness Calculator -->
+        <div class="bmi-widget-box">
+          <div class="bmi-header">
+            <span class="bmi-bonus-badge">&#9889; Interactive Patient Wellness Tool</span>
+            <h3>BMI (Body Mass Index) &amp; Wellness Calculator</h3>
+            <p>Enter your height in centimeters and weight in kilograms to evaluate your BMI category and receive instant clinical advice.</p>
+          </div>
+
+          <div class="inline-error" id="bmiErrorAlert"></div>
+
+          <div class="bmi-inputs-row">
+            <div class="bmi-field">
+              <label for="bmiHeightInput">Height (cm)</label>
+              <input type="number" id="bmiHeightInput" class="form-control" placeholder="e.g., 172" min="50" max="260">
+            </div>
+
+            <div class="bmi-field">
+              <label for="bmiWeightInput">Weight (kg)</label>
+              <input type="number" id="bmiWeightInput" class="form-control" placeholder="e.g., 68" min="10" max="350">
+            </div>
+
+            <div class="bmi-actions">
+              <button type="button" class="btn" id="calculateBmiBtn">Calculate BMI</button>
+              <button type="button" class="btn btn-outline" id="resetBmiBtn">Reset</button>
+            </div>
+          </div>
+
+          <!-- Dynamic BMI Result Output -->
+          <div class="bmi-result-panel" id="bmiResultPanel">
+            <div class="bmi-score-row">
+              <span class="bmi-score-number" id="bmiScoreValue">BMI: 23.0</span>
+              <span class="bmi-category-badge" id="bmiCategoryBadge">Healthy Weight</span>
+            </div>
+            <p class="bmi-advice-text" id="bmiAdviceText"></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- === 8. EMERGENCY CONTACTS & QUICK HELPLINE (#emergency) === -->
+    <section class="section emergency-section" id="emergency">
+      <div class="container">
+        <h2 class="section-title" style="color: #991b1b;">&#128680; 24/7 Emergency Contacts &amp; Quick Helpline</h2>
+        <p class="section-subtitle">
+          For urgent medical assistance, copy a direct helpline number or request an immediate callback from our emergency response desk.
+        </p>
+
+        <div class="flex-grid">
+
+          <!-- Emergency Card 1 -->
+          <article class="emergency-card">
+            <div>
+              <h3>24/7 Ambulance Dispatch</h3>
+              <div class="emergency-number">108</div>
+              <p>GPS-enabled Advanced Cardiac Life Support (ACLS) ambulances stationed across all city zones.</p>
+            </div>
+            <div class="emergency-btn-stack">
+              <button type="button" class="btn btn-outline copy-num-btn" data-copy-num="108">&#128203; Copy Number</button>
+              <button type="button" class="btn btn-red callback-btn" data-unit="24/7 Ambulance Dispatch (108)">Request Immediate Callback</button>
+            </div>
+          </article>
+
+          <!-- Emergency Card 2 -->
+          <article class="emergency-card">
+            <div>
+              <h3>Emergency Trauma Ward</h3>
+              <div class="emergency-number">+1-800-555-0199</div>
+              <p>Direct triage desk for acute injuries, chest pain, stroke emergencies, and critical surgical care.</p>
+            </div>
+            <div class="emergency-btn-stack">
+              <button type="button" class="btn btn-outline copy-num-btn" data-copy-num="+1-800-555-0199">&#128203; Copy Number</button>
+              <button type="button" class="btn btn-red callback-btn" data-unit="Emergency Trauma Ward (+1-800-555-0199)">Request Immediate Callback</button>
+            </div>
+          </article>
+
+          <!-- Emergency Card 3 -->
+          <article class="emergency-card">
+            <div>
+              <h3>24/7 Blood Bank</h3>
+              <div class="emergency-number">+1-800-555-0144</div>
+              <p>Round-the-clock component separation unit stocked with all blood groups and platelet concentrates.</p>
+            </div>
+            <div class="emergency-btn-stack">
+              <button type="button" class="btn btn-outline copy-num-btn" data-copy-num="+1-800-555-0144">&#128203; Copy Number</button>
+              <button type="button" class="btn btn-red callback-btn" data-unit="24/7 Blood Bank (+1-800-555-0144)">Request Immediate Callback</button>
+            </div>
+          </article>
+
+          <!-- Emergency Card 4 -->
+          <article class="emergency-card">
+            <div>
+              <h3>Poison &amp; Critical Care Control</h3>
+              <div class="emergency-number">+1-800-555-0177</div>
+              <p>Immediate toxicology consultation, antidote support, and ICU bed availability coordination.</p>
+            </div>
+            <div class="emergency-btn-stack">
+              <button type="button" class="btn btn-outline copy-num-btn" data-copy-num="+1-800-555-0177">&#128203; Copy Number</button>
+              <button type="button" class="btn btn-red callback-btn" data-unit="Poison & Critical Care Control (+1-800-555-0177)">Request Immediate Callback</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- === 9. INTERACTIVE APPOINTMENT BOOKING & PRINTABLE SLIP (#booking) === -->
+    <section class="section" id="booking">
+      <div class="container">
+        <h2 class="section-title">Book Hospital Appointment</h2>
+        <p class="section-subtitle">
+          Complete your patient details below, review the itemized fee summary, and generate your printable OPD Appointment Slip.
+        </p>
+
+        <!-- Dynamic Pre-Selection Status Banner -->
+        <div class="selection-banner" id="bookingSelectionBanner">
+          <span>&#127973; Department: <strong>Cardiology</strong></span>
+          <span>&#129658; Specialist: <strong>Dr. Arjun Mehta ($60 Consultation)</strong></span>
+        </div>
+
+        <div class="booking-layout">
+
+          <!-- LEFT PANEL: APPOINTMENT BOOKING FORM -->
+          <div class="booking-form-card">
+            <div class="inline-error" id="bookingErrorAlert"></div>
+
+            <form id="appointmentForm" novalidate>
+              <!-- Patient Full Name, Age & Gender -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="patientFullName">Patient Full Name *</label>
+                  <input type="text" id="patientFullName" class="form-control" placeholder="e.g., Ananya Sharma" required>
+                </div>
+
+                <div class="form-group" style="flex: 0 1 110px;">
+                  <label for="patientAge">Age *</label>
+                  <input type="number" id="patientAge" class="form-control" placeholder="e.g., 28" min="0" max="120" required>
+                </div>
+
+                <div class="form-group" style="flex: 0 1 150px;">
+                  <label for="patientGender">Gender</label>
+                  <select id="patientGender" class="form-control">
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Phone Number & Email -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="patientPhone">Phone Number *</label>
+                  <input type="tel" id="patientPhone" class="form-control" placeholder="e.g., +91 98765 43210" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="patientEmail">Email Address *</label>
+                  <input type="email" id="patientEmail" class="form-control" placeholder="e.g., ananya@college.edu" required>
+                </div>
+              </div>
+
+              <!-- Department & Matching Doctor Dropdowns -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="departmentSelect">Medical Department</label>
+                  <select id="departmentSelect" class="form-control">
+                    <option value="Cardiology" selected>Cardiology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                    <option value="General Medicine">General Medicine</option>
+                    <option value="Diagnostics & Radiology">Diagnostics &amp; Radiology</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="doctorSelect">Consulting Doctor</label>
+                  <select id="doctorSelect" class="form-control">
+                    <!-- Dynamically filtered/populated via JavaScript based on selected Department -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- Preferred Date & Preferred Time Slot -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="appointmentDate">Preferred Date *</label>
+                  <input type="date" id="appointmentDate" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="timeSlotSelect">Preferred Time Slot</label>
+                  <select id="timeSlotSelect" class="form-control">
+                    <option value="Morning 09:00 AM">Morning 09:00 AM</option>
+                    <option value="Afternoon 02:00 PM">Afternoon 02:00 PM</option>
+                    <option value="Evening 06:00 PM">Evening 06:00 PM</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- 2-Way Synced Checkboxes for the 4 Medical Services -->
+              <div class="form-group-full">
+                <label>Optional Diagnostic Packages &amp; Services (2-Way Synced)</label>
+                <div class="service-checklist">
+                  <label class="service-check-item" for="srv-fullbody">
+                    <span class="service-check-left">
+                      <input type="checkbox" id="srv-fullbody" class="service-checkbox" value="Complete Full-Body Health Checkup" data-price="80">
+                      <span>Complete Full-Body Health Checkup</span>
+                    </span>
+                    <span class="service-check-price">+$80</span>
+                  </label>
+
+                  <label class="service-check-item" for="srv-cardiac">
+                    <span class="service-check-left">
+                      <input type="checkbox" id="srv-cardiac" class="service-checkbox" value="Cardiac Screening Package (ECG + Echo)" data-price="60">
+                      <span>Cardiac Screening Package (ECG + Echo)</span>
+                    </span>
+                    <span class="service-check-price">+$60</span>
+                  </label>
+
+                  <label class="service-check-item" for="srv-mri">
+                    <span class="service-check-left">
+                      <input type="checkbox" id="srv-mri" class="service-checkbox" value="Advanced MRI / CT Diagnostic Scan" data-price="120">
+                      <span>Advanced MRI / CT Diagnostic Scan</span>
+                    </span>
+                    <span class="service-check-price">+$120</span>
+                  </label>
+
+                  <label class="service-check-item" for="srv-home">
+                    <span class="service-check-left">
+                      <input type="checkbox" id="srv-home" class="service-checkbox" value="Home Sample Collection & Digital Report" data-price="15">
+                      <span>Home Sample Collection &amp; Digital Report</span>
+                    </span>
+                    <span class="service-check-price">+$15</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Symptoms / Notes Textarea -->
+              <div class="form-group-full">
+                <label for="patientNotes">Symptoms / Clinical Notes (Optional)</label>
+                <textarea id="patientNotes" class="form-control" rows="3" placeholder="Briefly describe your symptoms, ongoing medications, or preferred language..."></textarea>
+              </div>
+
+              <!-- Form Submit & Fee Calculation Buttons -->
+              <div class="form-btn-row">
+                <button type="button" class="btn btn-outline" id="calculateFeeBtn">Calculate Fee</button>
+                <button type="submit" class="btn">Confirm Appointment</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- RIGHT PANEL: LIVE FEE SUMMARY & PRINTABLE APPOINTMENT SLIP -->
+          <div class="booking-summary-col">
+
+            <!-- Live Fee Summary Box -->
+            <div class="fee-summary-card" id="feeSummaryBox">
+              <h3>Live Visit Fee Summary</h3>
+
+              <div class="fee-line">
+                <span id="summaryDoctorLabel">Doctor Consultation (Dr. Arjun Mehta):</span>
+                <span id="summaryDoctorFee">$60.00</span>
+              </div>
+
+              <div class="fee-line">
+                <span id="summaryServicesLabel">Selected Diagnostic Services (0):</span>
+                <span id="summaryServicesFee">$0.00</span>
+              </div>
+
+              <div class="fee-line">
+                <span>Hospital Registration &amp; Digital Card Fee:</span>
+                <span>$5.00</span>
+              </div>
+
+              <div class="fee-grand-total">
+                <span>Grand Total:</span>
+                <span id="summaryGrandTotal">$65.00</span>
+              </div>
+            </div>
+
+            <!-- Printable Hospital Appointment Slip (Revealed on Confirmation) -->
+            <div class="slip-card" id="appointmentSlip">
+              <div class="slip-header">
+                <h4>&#127973; Hospital Appointment Slip</h4>
+                <span class="slip-id-pill" id="slipAppointmentId">#VC-2026-101</span>
+              </div>
+
+              <div class="slip-body">
+                <div class="slip-row">
+                  <span>Patient Name &amp; Age</span>
+                  <strong id="slipPatientInfo">-</strong>
+                </div>
+                <div class="slip-row">
+                  <span>Contact Phone &amp; Email</span>
+                  <strong id="slipContactInfo">-</strong>
+                </div>
+                <div class="slip-row">
+                  <span>Department</span>
+                  <strong id="slipDepartment">-</strong>
+                </div>
+                <div class="slip-row">
+                  <span>Consulting Doctor</span>
+                  <strong id="slipDoctor">-</strong>
+                </div>
+                <div class="slip-row">
+                  <span>Appointment Date &amp; Slot</span>
+                  <strong id="slipDateTime">-</strong>
+                </div>
+                <div class="slip-row">
+                  <span>Diagnostic Packages</span>
+                  <strong id="slipServices">None</strong>
+                </div>
+                <div class="slip-row">
+                  <span>Symptoms / Notes</span>
+                  <strong id="slipNotes">None</strong>
+                </div>
+                <div class="slip-row" style="border-bottom: none; padding-top: 12px;">
+                  <span style="font-weight: 700; color: #0f172a;">Total Estimated Fee</span>
+                  <strong id="slipTotalFee" style="color: #0f766e; font-size: 18px;">$0.00</strong>
+                </div>
+
+                <div class="slip-actions">
+                  <button type="button" class="btn btn-blue" id="printSlipBtn">&#128424; Print Appointment Slip</button>
+                  <button type="button" class="btn btn-outline" id="bookAnotherApptBtn">&#8635; Book Another Appointment</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- === 10. FOOTER & FLOATING BACK-TO-TOP BUTTON === -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Column 1: Hospital Info -->
+        <div class="footer-col">
+          <h4>&#127973; VitalCare Multispecialty Hospital</h4>
+          <p>
+            Compassionate Care, Advanced Medicine. Providing 24/7 emergency trauma care, diagnostics,
+            and specialist consultations across 15+ clinical departments.
+          </p>
+          <p>&#128205; 450 Health Avenue, Medical District</p>
+        </div>
+
+        <!-- Column 2: Quick Navigation -->
+        <div class="footer-col">
+          <h4>Quick Navigation</h4>
+          <ul class="footer-links">
+            <li><button type="button" class="footer-link-btn" data-scroll="#home">Home</button></li>
+            <li><button type="button" class="footer-link-btn" data-scroll="#about">About Hospital</button></li>
+            <li><button type="button" class="footer-link-btn" data-scroll="#departments">Medical Departments</button></li>
+            <li><button type="button" class="footer-link-btn" data-scroll="#doctors">Specialist Doctors</button></li>
+            <li><button type="button" class="footer-link-btn" data-scroll="#services">Diagnostic Services</button></li>
+            <li><button type="button" class="footer-link-btn" data-scroll="#health-info">Health Info &amp; BMI Tool</button></li>
+            <li><button type="button" class="footer-link-btn" data-scroll="#booking">Book Appointment</button></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: OPD Hours & Emergency -->
+        <div class="footer-col">
+          <h4>OPD Visiting Hours &amp; Helpline</h4>
+          <p><strong>Outpatient OPD:</strong> Mon – Sat, 08:30 AM – 08:00 PM</p>
+          <p><strong>Sunday Special Clinic:</strong> 09:00 AM – 02:00 PM</p>
+          <p><strong>Emergency &amp; Trauma:</strong> Open 24 Hours / 365 Days</p>
+          <p style="color: #fca5a5; font-weight: 700;">&#128657; Ambulance Helpline: 108 / +1-800-911-8482</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 VitalCare Multispecialty Hospital. All Rights Reserved.</p>
+        <span class="footer-lab-tag">Semester Web Development Lab Project &bull; HTML5, CSS3 &amp; Vanilla JavaScript</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back-to-Top Button -->
+  <button type="button" class="floating-top-btn" id="floatingTopBtn" title="Back to top">&#8593; Top</button>
+
+  <!-- === MODAL 1: DEPARTMENT INFO POPUP === -->
+  <div class="modal-overlay" id="deptModal" role="dialog" aria-modal="true" aria-labelledby="deptModalTitle">
+    <div class="modal-box">
+      <div class="modal-content">
+        <div class="modal-top-bar">
+          <h3 id="deptModalTitle">Department Name</h3>
+          <button type="button" class="modal-close-x" id="deptModalCloseX" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-pills" id="deptModalPills"></div>
+        <p class="modal-desc" id="deptModalDesc"></p>
+        <div class="modal-subheading">Key Treatments &amp; Procedures:</div>
+        <ul class="modal-list" id="deptModalTreatments"></ul>
+        <div class="modal-note-box" id="deptModalLocationHours"></div>
+        <div class="modal-footer-btns">
+          <button type="button" class="btn btn-outline" id="deptModalCloseBtn">Close</button>
+          <button type="button" class="btn" id="deptModalSelectBtn">Book in This Department</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- === MODAL 2: DOCTOR PROFILE POPUP === -->
+  <div class="modal-overlay" id="doctorModal" role="dialog" aria-modal="true" aria-labelledby="docModalTitle">
+    <div class="modal-box">
+      <img src="" alt="Doctor portrait" class="modal-banner-img" id="docModalImg">
+      <div class="modal-content">
+        <div class="modal-top-bar">
+          <h3 id="docModalTitle">Doctor Name</h3>
+          <button type="button" class="modal-close-x" id="docModalCloseX" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-pills" id="docModalPills"></div>
+        <p class="modal-desc" id="docModalBio"></p>
+        <div class="modal-subheading">Clinical Focus &amp; Qualifications:</div>
+        <ul class="modal-list" id="docModalHighlights"></ul>
+        <div class="modal-note-box" id="docModalSchedule"></div>
+        <div class="modal-footer-btns">
+          <button type="button" class="btn btn-outline" id="docModalCloseBtn">Close</button>
+          <button type="button" class="btn btn-blue" id="docModalBookBtn">Book Appointment with Doctor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- === MODAL 3: HEALTH GUIDE READER POPUP === -->
+  <div class="modal-overlay" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideModalTitle">
+    <div class="modal-box">
+      <img src="" alt="Health guide banner" class="modal-banner-img" id="guideModalImg">
+      <div class="modal-content">
+        <div class="modal-top-bar">
+          <h3 id="guideModalTitle">Health Guide Title</h3>
+          <button type="button" class="modal-close-x" id="guideModalCloseX" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-pills" id="guideModalPills"></div>
+        <p class="modal-desc" id="guideModalIntro"></p>
+        <div class="modal-subheading">Doctor-Approved Action Steps:</div>
+        <ul class="modal-list" id="guideModalTips"></ul>
+        <div class="modal-footer-btns">
+          <button type="button" class="btn btn-outline" id="guideModalCloseBtn">Close Guide</button>
+          <button type="button" class="btn" id="guideModalCheckupBtn">Schedule Preventive Checkup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- === MODAL 4: EMERGENCY DISPATCH / CALLBACK POPUP === -->
+  <div class="modal-overlay" id="emergencyModal" role="dialog" aria-modal="true" aria-labelledby="emergModalTitle">
+    <div class="modal-box">
+      <div class="modal-content">
+        <div class="modal-top-bar">
+          <h3 id="emergModalTitle" style="color: #dc2626;">&#128680; Emergency Response Dispatch</h3>
+          <button type="button" class="modal-close-x" id="emergModalCloseX" aria-label="Close modal">&times;</button>
+        </div>
+        <p class="modal-desc">
+          Our 24/7 Emergency Triage Desk responds within <strong>60 seconds</strong>. Enter your contact details below for an immediate callback or ambulance dispatch.
+        </p>
+
+        <div class="inline-error" id="emergErrorAlert"></div>
+        <div class="emergency-dispatch-success" id="emergSuccessBox"></div>
+
+        <form id="emergencyCallbackForm" novalidate>
+          <div class="form-group-full">
+            <label for="emergUnitInput">Emergency Unit Selected</label>
+            <input type="text" id="emergUnitInput" class="form-control" value="24/7 Ambulance Helpline (108)" readonly>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="emergCallerName">Patient / Caller Name *</label>
+              <input type="text" id="emergCallerName" class="form-control" placeholder="e.g., Rajesh Kumar" required>
+            </div>
+
+            <div class="form-group">
+              <label for="emergCallerPhone">Callback Phone Number *</label>
+              <input type="tel" id="emergCallerPhone" class="form-control" placeholder="e.g., +91 98765 00108" required>
+            </div>
+          </div>
+
+          <div class="form-group-full">
+            <label for="emergLocationInput">Pickup Address / Emergency Brief (Optional)</label>
+            <input type="text" id="emergLocationInput" class="form-control" placeholder="e.g., Sector 14 Main Road, Near City Park">
+          </div>
+
+          <div class="modal-footer-btns">
+            <button type="button" class="btn btn-outline" id="emergModalCloseBtn">Cancel</button>
+            <button type="submit" class="btn btn-red">&#128222; Request Urgent Callback</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- === 11. VANILLA JAVASCRIPT (STRUCTURED & COMMENTED FOR LAB VIVA) === -->
+  <script>
+    // =========================================================================
+    // A. STRUCTURED CLINICAL DATA CATALOGS (DEPARTMENTS, DOCTORS, GUIDES)
+    // =========================================================================
+    const departmentsData = {
+      cardiology: {
+        value: "Cardiology",
+        name: "Cardiology — Heart & Vascular Center",
+        category: "Heart & Neuro",
+        floor: "2nd Floor, East Wing (Block A)",
+        hours: "OPD Hours: Mon – Sat, 09:00 AM – 06:00 PM | 24/7 Cath Lab",
+        description: "Our Cardiology department offers comprehensive non-invasive and interventional heart care backed by digital flat-panel catheterization labs and dedicated Coronary Care Units (CCU).",
+        treatments: [
+          "12-Lead Digital ECG, 2D Echocardiography & Treadmill Stress Test (TMT)",
+          "Coronary Angiography, Angioplasty & Stent Placement",
+          "Pacemaker Implantation & Heart Rhythm (Arrhythmia) Clinic",
+          "Preventive Lipid & Hypertension Management Program"
+        ]
+      },
+      neurology: {
+        value: "Neurology",
+        name: "Neurology — Brain & Spine Center",
+        category: "Heart & Neuro",
+        floor: "3rd Floor, East Wing (Block A)",
+        hours: "OPD Hours: Mon – Sat, 10:00 AM – 05:30 PM | 24/7 Stroke Unit",
+        description: "Equipped with advanced neuro-electrophysiology labs and a rapid-response thrombolysis stroke unit for disorders of the brain, spinal cord, and peripheral nerves.",
+        treatments: [
+          "Video EEG, EMG & Nerve Conduction Velocity (NCV) Studies",
+          "Acute Ischemic Stroke Rapid Clot-Busting & Neuro-ICU",
+          "Comprehensive Epilepsy, Migraine & Movement Disorder Clinic",
+          "Post-Stroke Neuro-Rehabilitation & Spine Physiotherapy"
+        ]
+      },
+      orthopedics: {
+        value: "Orthopedics",
+        name: "Orthopedics — Joint, Bone & Sports Medicine",
+        category: "Bone & Child Care",
+        floor: "1st Floor, West Wing (Block B)",
+        hours: "OPD Hours: Mon – Sat, 09:30 AM – 06:00 PM",
+        description: "Specializing in minimally invasive arthroscopy, robotic-assisted joint replacement, pediatric orthopedics, and rapid fracture trauma stabilization.",
+        treatments: [
+          "Total Knee & Hip Joint Replacement Surgery",
+          "Arthroscopic ACL / Meniscus Ligament Reconstruction",
+          "Spine Decompression & Slip-Disc Care Clinic",
+          "Digital Bone Densitometry (DEXA) & Sports Rehab"
+        ]
+      },
+      pediatrics: {
+        value: "Pediatrics",
+        name: "Pediatrics — Child & Neonatal Care Wing",
+        category: "Bone & Child Care",
+        floor: "1st Floor, North Atrium (Kid-Friendly Zone)",
+        hours: "OPD Hours: Mon – Sat, 09:00 AM – 07:00 PM | 24/7 NICU",
+        description: "A warm, stress-free clinical environment dedicated to newborns, infants, children, and adolescents with Level-III Neonatal Intensive Care support.",
+        treatments: [
+          "Complete National & International Childhood Immunization Clinic",
+          "Newborn Jaundice, Premature Care & Level-III NICU",
+          "Pediatric Asthma, Allergy & Respiratory Wellness Clinic",
+          "Child Growth, Developmental Milestone & Nutrition Assessment"
+        ]
+      },
+      general: {
+        value: "General Medicine",
+        name: "General Medicine — Primary & Internal Care",
+        category: "General & Diagnostics",
+        floor: "Ground Floor, Main OPD Lobby",
+        hours: "OPD Hours: Daily (Mon – Sun), 08:30 AM – 08:00 PM",
+        description: "First-point diagnostic and multisystem medical care focusing on infectious diseases, metabolic disorders, diabetes, and preventive adult health.",
+        treatments: [
+          "Comprehensive Diabetes, Thyroid & Metabolic Disorder Care",
+          "Seasonal Viral Fever, Dengue, Typhoid & Respiratory Evaluation",
+          "Pre-Operative Medical Fitness & Executive Health Reviews",
+          "Geriatric Wellness & Chronic Care Coordination"
+        ]
+      },
+      diagnostics: {
+        value: "Diagnostics & Radiology",
+        name: "Diagnostics & Radiology — 24/7 Imaging & Lab",
+        category: "General & Diagnostics",
+        floor: "Ground Floor, Diagnostic Plaza",
+        hours: "Open 24 Hours / 7 Days a Week (Walk-in & Scheduled)",
+        description: "NABL-accredited automated biochemistry pathology laboratory paired with low-radiation digital imaging suites for rapid, accurate diagnosis.",
+        treatments: [
+          "3 Tesla High-Definition MRI & 128-Slice Multi-Detector CT Scan",
+          "4D Color Doppler Ultrasound & Digital Low-Dose X-Ray",
+          "Automated Hematology, Hormonal & Cardiac Biomarker Lab",
+          "Same-Day Online Patient Portal & Digital Report Delivery"
+        ]
+      }
+    };
+
+    const doctorsCatalog = [
+      {
+        id: "dr-mehta",
+        name: "Dr. Arjun Mehta",
+        department: "Cardiology",
+        degree: "MD, DM (Cardiology)",
+        role: "Chief Interventional Cardiologist",
+        experience: "16+ Years Experience",
+        fee: 60,
+        availability: "Mon, Wed, Fri (10:00 AM – 04:00 PM)",
+        chamber: "Room 204, Cardiology Wing (2nd Floor)",
+        image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80",
+        bio: "Dr. Arjun Mehta has performed over 3,500 complex coronary interventions and leads VitalCare's Preventive Heart Failure and Hypertension Program.",
+        highlights: [
+          "Fellowship in Interventional Cardiology — European Society of Cardiology",
+          "Specialist in radial-route angiography, echocardiography & lipid disorders",
+          "Languages: English, Hindi, Gujarati"
+        ]
+      },
+      {
+        id: "dr-nair",
+        name: "Dr. Priya Nair",
+        department: "Neurology",
+        degree: "MD, DM (Neurology)",
+        role: "Head of Neuro-Sciences",
+        experience: "14+ Years Experience",
+        fee: 65,
+        availability: "Tue, Thu, Sat (11:00 AM – 05:00 PM)",
+        chamber: "Room 308, Neuro Center (3rd Floor)",
+        image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=600&q=80",
+        bio: "Dr. Priya Nair directs VitalCare's 24/7 Acute Stroke Unit and specializes in neuro-electrophysiology, chronic migraine therapies, and epilepsy management.",
+        highlights: [
+          "Gold Medalist in DM Neurology & Clinical Neurophysiology",
+          "Lead investigator in rapid stroke thrombolysis & neuro-rehab protocols",
+          "Languages: English, Malayalam, Hindi"
+        ]
+      },
+      {
+        id: "dr-rao",
+        name: "Dr. Vikram Rao",
+        department: "Orthopedics",
+        degree: "MBBS, MS (Orthopedics)",
+        role: "Senior Joint Replacement & Sports Surgeon",
+        experience: "12+ Years Experience",
+        fee: 50,
+        availability: "Mon, Tue, Thu, Sat (09:30 AM – 03:30 PM)",
+        chamber: "Room 112, Ortho Clinic (1st Floor)",
+        image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80",
+        bio: "Dr. Vikram Rao specializes in minimally invasive knee and hip arthroplasty as well as keyhole arthroscopic shoulder and knee ligament repairs.",
+        highlights: [
+          "Advanced Fellowship in Computer-Navigated Joint Replacement",
+          "Team orthopedic consultant for regional athletics & sports academies",
+          "Languages: English, Telugu, Hindi"
+        ]
+      },
+      {
+        id: "dr-kulkarni",
+        name: "Dr. Sneha Kulkarni",
+        department: "Pediatrics",
+        degree: "MBBS, MD (Pediatrics)",
+        role: "Senior Child & Neonatal Specialist",
+        experience: "10+ Years Experience",
+        fee: 45,
+        availability: "Mon – Sat (10:00 AM – 06:00 PM)",
+        chamber: "Room 105, Pediatric Atrium (1st Floor)",
+        image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80",
+        bio: "Dr. Sneha Kulkarni is dedicated to newborn intensive care, childhood immunization counseling, pediatric asthma management, and developmental nutrition.",
+        highlights: [
+          "Certified Neonatal Resuscitation (NRP) & Pediatric Intensive Care Specialist",
+          "Focus on holistic child growth tracking and allergy prevention",
+          "Languages: English, Marathi, Hindi"
+        ]
+      },
+      {
+        id: "dr-verma",
+        name: "Dr. Rohan Verma",
+        department: "General Medicine",
+        alsoSupports: "Diagnostics & Radiology",
+        degree: "MBBS, MD (Internal Medicine)",
+        role: "Senior Physician & Preventive Diagnostics Lead",
+        experience: "15+ Years Experience",
+        fee: 40,
+        availability: "Daily Mon – Sun (09:00 AM – 07:00 PM)",
+        chamber: "Room 102, Main Ground OPD Lobby",
+        image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80",
+        bio: "Dr. Rohan Verma oversees outpatient internal medicine and preventive diagnostic screenings, helping patients manage diabetes, thyroid, and lifestyle conditions.",
+        highlights: [
+          "Fellow of the Royal College of Physicians (Internal Medicine)",
+          "Coordinates full-body diagnostic checkups & multi-specialty referrals",
+          "Languages: English, Hindi, Punjabi"
+        ]
+      }
+    ];
+
+    const healthGuidesData = {
+      "guide-heart": {
+        title: "Heart-Healthy Daily Habits",
+        tag: "Cardiology Wellness Guide • Dr. Arjun Mehta",
+        image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&w=800&q=80",
+        intro: "Cardiovascular disease is largely preventable through consistent daily lifestyle choices that keep blood pressure, cholesterol, and resting heart rate in healthy ranges.",
+        tips: [
+          "Aim for at least 30 minutes of moderate aerobic activity (brisk walking, cycling, or swimming) 5 days a week.",
+          "Limit daily sodium intake below 2,000 mg and replace trans fats with omega-3 rich walnuts, flaxseeds, and olive oil.",
+          "Practice 10 minutes of deep diaphragmatic breathing daily to lower cortisol and arterial tension.",
+          "Monitor resting blood pressure monthly and schedule an annual ECG if you have a family history of heart disease."
+        ]
+      },
+      "guide-immunity": {
+        title: "Managing Seasonal Immunity & Hydration",
+        tag: "Internal Medicine Guide • Dr. Rohan Verma",
+        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80",
+        intro: "Seasonal weather transitions challenge mucosal barriers and immune response. Proper cellular hydration and micronutrient balance keep defenses strong year-round.",
+        tips: [
+          "Drink 2.5 to 3 liters of clean water daily, adding natural electrolytes like coconut water or lemon water during warm weather.",
+          "Include Vitamin C and Zinc sources such as citrus fruits, bell peppers, pumpkin seeds, and leafy greens in daily meals.",
+          "Maintain 7 to 8 hours of uninterrupted sleep so T-cells and immune cytokines can regenerate effectively.",
+          "Avoid self-medicating with antibiotics for viral fevers—consult a physician for accurate blood diagnostics."
+        ]
+      },
+      "guide-screening": {
+        title: "Importance of Annual Preventive Screenings",
+        tag: "Preventive Diagnostics Guide • VitalCare Lab",
+        image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
+        intro: "Conditions like pre-diabetes, high LDL cholesterol, thyroid imbalance, and Vitamin D deficiency often develop silently for years before causing noticeable symptoms.",
+        tips: [
+          "Schedule a Complete Blood Count (CBC), Fasting Blood Sugar (HbA1c), and Lipid Profile once every 12 months.",
+          "Include Liver Function (LFT), Kidney Function (KFT), and Thyroid (TSH) panels to establish your baseline health metrics.",
+          "Fast for 10–12 hours (water permitted) prior to morning blood sample collection for accurate glucose and triglyceride readings.",
+          "Share your digital diagnostic report with an Internal Medicine specialist to tailor diet and exercise targets."
+        ]
+      }
+    };
+
+    // =========================================================================
+    // B. DOM REFERENCES & DEFAULT APPOINTMENT DATE SETUP
+    // =========================================================================
+    const navLinks = document.getElementById("navLinks");
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const departmentSelect = document.getElementById("departmentSelect");
+    const doctorSelect = document.getElementById("doctorSelect");
+    const appointmentDateInput = document.getElementById("appointmentDate");
+    const bookingSelectionBanner = document.getElementById("bookingSelectionBanner");
+    const feeSummaryBox = document.getElementById("feeSummaryBox");
+
+    // Helper: Format local Date to YYYY-MM-DD
+    function getLocalDateISO(dateObj) {
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const day = String(dateObj.getDate()).padStart(2, "0");
+      return year + "-" + month + "-" + day;
+    }
+
+    // Set minimum date to today and default appointment date to tomorrow
+    function initializeAppointmentDate() {
+      const today = new Date();
+      const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+      appointmentDateInput.min = getLocalDateISO(today);
+      appointmentDateInput.value = getLocalDateISO(tomorrow);
+    }
+
+    initializeAppointmentDate();
+
+    // =========================================================================
+    // C. SMOOTH NAVIGATION, MOBILE MENU & BACK-TO-TOP
+    // =========================================================================
+    function smoothScrollTo(selector) {
+      const target = document.querySelector(selector);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    hamburgerBtn.addEventListener("click", function () {
+      navLinks.classList.toggle("open");
+      hamburgerBtn.innerHTML = navLinks.classList.contains("open") ? "&times;" : "&#9776;";
+    });
+
+    document.getElementById("brandLogoBtn").addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("floatingTopBtn").addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Navbar & Footer smooth scroll buttons
+    document.querySelectorAll("[data-scroll]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        smoothScrollTo(btn.getAttribute("data-scroll"));
+        navLinks.classList.remove("open");
+        hamburgerBtn.innerHTML = "&#9776;";
+      });
+    });
+
+    // Hero CTA Buttons
+    document.getElementById("heroBookBtn").addEventListener("click", function () {
+      smoothScrollTo("#booking");
+      setTimeout(function () {
+        document.getElementById("patientFullName").focus();
+      }, 450);
+    });
+
+    document.getElementById("heroExploreBtn").addEventListener("click", function () {
+      smoothScrollTo("#departments");
+    });
+
+    // =========================================================================
+    // D. DEPARTMENT FILTERS, INFO MODAL & "SELECT DEPARTMENT" SYNC
+    // =========================================================================
+    const deptFilterBtns = document.querySelectorAll(".dept-filter-btn");
+    const deptCards = document.querySelectorAll(".dept-card");
+    const deptCounterText = document.getElementById("deptCounterText");
+
+    deptFilterBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        deptFilterBtns.forEach(function (b) {
+          b.classList.remove("active");
+        });
+        btn.classList.add("active");
+
+        const category = btn.getAttribute("data-category");
+        let visibleCount = 0;
+
+        deptCards.forEach(function (card) {
+          if (category === "All" || card.getAttribute("data-category") === category) {
+            card.style.display = "flex";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        deptCounterText.textContent = "Showing " + visibleCount + " of " + deptCards.length + " departments";
+      });
+    });
+
+    // Department Details Modal
+    const deptModal = document.getElementById("deptModal");
+    let currentModalDeptValue = "Cardiology";
+
+    function openDepartmentModal(deptId) {
+      const info = departmentsData[deptId];
+      if (!info) return;
+
+      currentModalDeptValue = info.value;
+      document.getElementById("deptModalTitle").textContent = info.name;
+      document.getElementById("deptModalDesc").textContent = info.description;
+      document.getElementById("deptModalLocationHours").textContent = info.floor + " | " + info.hours;
+
+      const pillsContainer = document.getElementById("deptModalPills");
+      pillsContainer.innerHTML = "";
+      [info.category, info.floor].forEach(function (text) {
+        const span = document.createElement("span");
+        span.className = "modal-pill";
+        span.textContent = text;
+        pillsContainer.appendChild(span);
+      });
+
+      const listUl = document.getElementById("deptModalTreatments");
+      listUl.innerHTML = "";
+      info.treatments.forEach(function (item) {
+        const li = document.createElement("li");
+        li.textContent = item;
+        listUl.appendChild(li);
+      });
+
+      deptModal.classList.add("open");
+    }
+
+    function closeDepartmentModal() {
+      deptModal.classList.remove("open");
+    }
+
+    document.querySelectorAll(".dept-info-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        openDepartmentModal(btn.getAttribute("data-dept-id"));
+      });
+    });
+
+    document.getElementById("deptModalCloseX").addEventListener("click", closeDepartmentModal);
+    document.getElementById("deptModalCloseBtn").addEventListener("click", closeDepartmentModal);
+    deptModal.addEventListener("click", function (e) {
+      if (e.target === deptModal) closeDepartmentModal();
+    });
+
+    document.getElementById("deptModalSelectBtn").addEventListener("click", function () {
+      closeDepartmentModal();
+      selectDepartmentInBooking(currentModalDeptValue);
+    });
+
+    // Select Department buttons on cards
+    document.querySelectorAll(".select-dept-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        selectDepartmentInBooking(btn.getAttribute("data-dept-value"));
+      });
+    });
+
+    // =========================================================================
+    // E. DOCTOR FILTERS, PROFILE MODAL & "BOOK DOCTOR" SYNC
+    // =========================================================================
+    const docFilterBtns = document.querySelectorAll(".doc-filter-btn");
+    const doctorCards = document.querySelectorAll(".doctor-card");
+    const docCounterText = document.getElementById("docCounterText");
+
+    docFilterBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        docFilterBtns.forEach(function (b) {
+          b.classList.remove("active");
+        });
+        btn.classList.add("active");
+
+        const specialty = btn.getAttribute("data-specialty");
+        let visibleDocs = 0;
+
+        doctorCards.forEach(function (card) {
+          if (specialty === "All" || card.getAttribute("data-specialty") === specialty) {
+            card.style.display = "flex";
+            visibleDocs++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        docCounterText.textContent = "Showing " + visibleDocs + " of " + doctorCards.length + " specialist doctors";
+      });
+    });
+
+    // Doctor Profile Modal
+    const doctorModal = document.getElementById("doctorModal");
+    let currentModalDocName = "Dr. Arjun Mehta";
+    let currentModalDocDept = "Cardiology";
+
+    function openDoctorModal(docId) {
+      const doc = doctorsCatalog.find(function (item) {
+        return item.id === docId;
+      });
+      if (!doc) return;
+
+      currentModalDocName = doc.name;
+      currentModalDocDept = doc.department;
+
+      document.getElementById("docModalImg").src = doc.image;
+      document.getElementById("docModalTitle").textContent = doc.name + " (" + doc.degree + ")";
+      document.getElementById("docModalBio").textContent = doc.bio;
+      document.getElementById("docModalSchedule").textContent =
+        "Chamber: " + doc.chamber + " | OPD Schedule: " + doc.availability;
+
+      const pillsContainer = document.getElementById("docModalPills");
+      pillsContainer.innerHTML = "";
+      [doc.department, doc.experience, "Consultation Fee: $" + doc.fee].forEach(function (text) {
+        const span = document.createElement("span");
+        span.className = "modal-pill";
+        span.textContent = text;
+        pillsContainer.appendChild(span);
+      });
+
+      const listUl = document.getElementById("docModalHighlights");
+      listUl.innerHTML = "";
+      doc.highlights.forEach(function (item) {
+        const li = document.createElement("li");
+        li.textContent = item;
+        listUl.appendChild(li);
+      });
+
+      doctorModal.classList.add("open");
+    }
+
+    function closeDoctorModal() {
+      doctorModal.classList.remove("open");
+    }
+
+    document.querySelectorAll(".view-doc-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        openDoctorModal(btn.getAttribute("data-doc-id"));
+      });
+    });
+
+    document.getElementById("docModalCloseX").addEventListener("click", closeDoctorModal);
+    document.getElementById("docModalCloseBtn").addEventListener("click", closeDoctorModal);
+    doctorModal.addEventListener("click", function (e) {
+      if (e.target === doctorModal) closeDoctorModal();
+    });
+
+    document.getElementById("docModalBookBtn").addEventListener("click", function () {
+      closeDoctorModal();
+      selectDoctorAndDeptInBooking(currentModalDocName, currentModalDocDept);
+    });
+
+    // Book Doctor buttons on cards
+    document.querySelectorAll(".book-doc-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        selectDoctorAndDeptInBooking(
+          btn.getAttribute("data-doc-value"),
+          btn.getAttribute("data-dept-value")
+        );
+      });
+    });
+
+    // =========================================================================
+    // F. DYNAMIC DEPARTMENT -> DOCTOR DROPDOWN FILTERING & FEE CALCULATION
+    // =========================================================================
+    function populateDoctorDropdownForDepartment(selectedDept, preferredDocName) {
+      doctorSelect.innerHTML = "";
+
+      // Filter doctors matching the selected department (or supporting Diagnostics & Radiology)
+      const matchingDoctors = doctorsCatalog.filter(function (doc) {
+        return doc.department === selectedDept || doc.alsoSupports === selectedDept;
+      });
+
+      const listToRender = matchingDoctors.length > 0 ? matchingDoctors : doctorsCatalog;
+
+      listToRender.forEach(function (doc) {
+        const option = document.createElement("option");
+        option.value = doc.name;
+        option.setAttribute("data-fee", doc.fee);
+        option.textContent = doc.name + " (" + doc.department + " — $" + doc.fee + ")";
+        if (preferredDocName && doc.name === preferredDocName) {
+          option.selected = true;
+        }
+        doctorSelect.appendChild(option);
+      });
+    }
+
+    function selectDepartmentInBooking(deptName) {
+      departmentSelect.value = deptName;
+      populateDoctorDropdownForDepartment(deptName);
+      recalculateAppointmentFee();
+      smoothScrollTo("#booking");
+    }
+
+    function selectDoctorAndDeptInBooking(docName, deptName) {
+      departmentSelect.value = deptName;
+      populateDoctorDropdownForDepartment(deptName, docName);
+      recalculateAppointmentFee();
+      smoothScrollTo("#booking");
+    }
+
+    departmentSelect.addEventListener("change", function () {
+      populateDoctorDropdownForDepartment(departmentSelect.value);
+      recalculateAppointmentFee();
+    });
+
+    doctorSelect.addEventListener("change", recalculateAppointmentFee);
+
+    // =========================================================================
+    // G. MEDICAL SERVICES: 2-WAY SYNC WITH BOOKING CHECKBOXES
+    // =========================================================================
+    const serviceToggleBtns = document.querySelectorAll(".service-toggle-btn");
+    const serviceCheckboxes = document.querySelectorAll(".service-checkbox");
+
+    function syncServiceCardButtonUI(serviceId, isChecked) {
+      const btn = document.querySelector('.service-toggle-btn[data-service-id="' + serviceId + '"]');
+      if (!btn) return;
+
+      if (isChecked) {
+        btn.classList.add("added");
+        btn.innerHTML = "&#10003; Added to Appointment";
+      } else {
+        btn.classList.remove("added");
+        btn.textContent = "+ Add to Appointment";
+      }
+    }
+
+    serviceToggleBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const serviceId = btn.getAttribute("data-service-id");
+        const checkbox = document.getElementById(serviceId);
+        if (!checkbox) return;
+
+        checkbox.checked = !checkbox.checked;
+        syncServiceCardButtonUI(serviceId, checkbox.checked);
+        recalculateAppointmentFee();
+      });
+    });
+
+    serviceCheckboxes.forEach(function (checkbox) {
+      checkbox.addEventListener("change", function () {
+        syncServiceCardButtonUI(checkbox.id, checkbox.checked);
+        recalculateAppointmentFee();
+      });
+    });
+
+    // =========================================================================
+    // H. HEALTH GUIDE MODAL & INTERACTIVE BMI CALCULATOR
+    // =========================================================================
+    const guideModal = document.getElementById("guideModal");
+
+    function openHealthGuideModal(guideId) {
+      const guide = healthGuidesData[guideId];
+      if (!guide) return;
+
+      document.getElementById("guideModalImg").src = guide.image;
+      document.getElementById("guideModalTitle").textContent = guide.title;
+      document.getElementById("guideModalIntro").textContent = guide.intro;
+
+      const pillsContainer = document.getElementById("guideModalPills");
+      pillsContainer.innerHTML = '<span class="modal-pill">' + guide.tag + '</span>';
+
+      const tipsUl = document.getElementById("guideModalTips");
+      tipsUl.innerHTML = "";
+      guide.tips.forEach(function (tip) {
+        const li = document.createElement("li");
+        li.textContent = tip;
+        tipsUl.appendChild(li);
+      });
+
+      guideModal.classList.add("open");
+    }
+
+    function closeHealthGuideModal() {
+      guideModal.classList.remove("open");
+    }
+
+    document.querySelectorAll(".read-guide-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        openHealthGuideModal(btn.getAttribute("data-guide-id"));
+      });
+    });
+
+    document.getElementById("guideModalCloseX").addEventListener("click", closeHealthGuideModal);
+    document.getElementById("guideModalCloseBtn").addEventListener("click", closeHealthGuideModal);
+    guideModal.addEventListener("click", function (e) {
+      if (e.target === guideModal) closeHealthGuideModal();
+    });
+
+    document.getElementById("guideModalCheckupBtn").addEventListener("click", function () {
+      closeHealthGuideModal();
+      const fullBodyCheckbox = document.getElementById("srv-fullbody");
+      if (fullBodyCheckbox && !fullBodyCheckbox.checked) {
+        fullBodyCheckbox.checked = true;
+        syncServiceCardButtonUI("srv-fullbody", true);
+      }
+      selectDepartmentInBooking("General Medicine");
+    });
+
+    // Interactive BMI Calculator Logic
+    const bmiHeightInput = document.getElementById("bmiHeightInput");
+    const bmiWeightInput = document.getElementById("bmiWeightInput");
+    const bmiResultPanel = document.getElementById("bmiResultPanel");
+    const bmiErrorAlert = document.getElementById("bmiErrorAlert");
+
+    document.getElementById("calculateBmiBtn").addEventListener("click", function () {
+      const heightCm = parseFloat(bmiHeightInput.value);
+      const weightKg = parseFloat(bmiWeightInput.value);
+
+      if (isNaN(heightCm) || isNaN(weightKg) || heightCm < 50 || heightCm > 260 || weightKg < 10 || weightKg > 350) {
+        bmiErrorAlert.textContent = "Please enter a valid Height (50–260 cm) and Weight (10–350 kg).";
+        bmiErrorAlert.style.display = "block";
+        bmiResultPanel.classList.remove("visible");
+        return;
+      }
+
+      bmiErrorAlert.style.display = "none";
+
+      // BMI Formula: weight (kg) / [height (m)]^2
+      const heightMeters = heightCm / 100;
+      const bmiValue = weightKg / (heightMeters * heightMeters);
+      const bmiRounded = bmiValue.toFixed(1);
+
+      let category = "";
+      let badgeColor = "";
+      let advice = "";
+
+      if (bmiValue < 18.5) {
+        category = "Underweight";
+        badgeColor = "#0284c7";
+        advice = "Your BMI is below the standard range. Consider nutrient-dense meals, strength training, and a General Medicine nutrition review.";
+      } else if (bmiValue < 25) {
+        category = "Healthy Weight";
+        badgeColor = "#16a34a";
+        advice = "Great job! Your BMI is within the optimal healthy range. Maintain balanced nutrition, regular physical activity, and annual checkups.";
+      } else if (bmiValue < 30) {
+        category = "Overweight";
+        badgeColor = "#d97706";
+        advice = "Your BMI is slightly above the ideal range. Incorporating 30–45 minutes of daily cardio and portion balance can help lower metabolic risk.";
+      } else {
+        category = "Obese";
+        badgeColor = "#dc2626";
+        advice = "Your BMI falls in the higher cardiovascular risk zone. We recommend scheduling a Complete Full-Body Checkup and consulting our Internal Medicine team.";
+      }
+
+      document.getElementById("bmiScoreValue").textContent = "BMI: " + bmiRounded;
+      const badgeEl = document.getElementById("bmiCategoryBadge");
+      badgeEl.textContent = category;
+      badgeEl.style.backgroundColor = badgeColor;
+      document.getElementById("bmiAdviceText").textContent = advice;
+
+      bmiResultPanel.classList.add("visible");
+    });
+
+    document.getElementById("resetBmiBtn").addEventListener("click", function () {
+      bmiHeightInput.value = "";
+      bmiWeightInput.value = "";
+      bmiErrorAlert.style.display = "none";
+      bmiResultPanel.classList.remove("visible");
+    });
+
+    // =========================================================================
+    // I. EMERGENCY CONTACTS: COPY NUMBER & CALLBACK DISPATCH MODAL
+    // =========================================================================
+    function copyTextToClipboard(text) {
+      const tempInput = document.createElement("textarea");
+      tempInput.value = text;
+      tempInput.style.position = "fixed";
+      tempInput.style.opacity = "0";
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        // Fallback handled silently
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    document.querySelectorAll(".copy-num-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const numberToCopy = btn.getAttribute("data-copy-num");
+        copyTextToClipboard(numberToCopy);
+
+        const originalLabel = btn.innerHTML;
+        btn.classList.add("copied");
+        btn.innerHTML = "&#10003; Copied!";
+
+        setTimeout(function () {
+          btn.classList.remove("copied");
+          btn.innerHTML = originalLabel;
+        }, 2000);
+      });
+    });
+
+    // Emergency Callback Modal
+    const emergencyModal = document.getElementById("emergencyModal");
+    const emergUnitInput = document.getElementById("emergUnitInput");
+    const emergSuccessBox = document.getElementById("emergSuccessBox");
+    const emergErrorAlert = document.getElementById("emergErrorAlert");
+
+    function openEmergencyModal(unitLabel) {
+      emergUnitInput.value = unitLabel || "24/7 Ambulance Helpline (108)";
+      emergErrorAlert.style.display = "none";
+      emergSuccessBox.style.display = "none";
+      emergencyModal.classList.add("open");
+    }
+
+    function closeEmergencyModal() {
+      emergencyModal.classList.remove("open");
+    }
+
+    document.getElementById("topEmergencyCallBtn").addEventListener("click", function () {
+      openEmergencyModal("24/7 Ambulance Helpline (108 / +1-800-911-8482)");
+    });
+
+    document.querySelectorAll(".callback-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        openEmergencyModal(btn.getAttribute("data-unit"));
+      });
+    });
+
+    document.getElementById("emergModalCloseX").addEventListener("click", closeEmergencyModal);
+    document.getElementById("emergModalCloseBtn").addEventListener("click", closeEmergencyModal);
+    emergencyModal.addEventListener("click", function (e) {
+      if (e.target === emergencyModal) closeEmergencyModal();
+    });
+
+    document.getElementById("emergencyCallbackForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const callerName = document.getElementById("emergCallerName").value.trim();
+      const callerPhone = document.getElementById("emergCallerPhone").value.trim();
+      const locationNote = document.getElementById("emergLocationInput").value.trim();
+
+      if (!callerName || !callerPhone) {
+        emergErrorAlert.textContent = "Please enter both Patient/Caller Name and Callback Phone Number.";
+        emergErrorAlert.style.display = "block";
+        emergSuccessBox.style.display = "none";
+        return;
+      }
+
+      emergErrorAlert.style.display = "none";
+      const dispatchCode = "EMG-" + Math.floor(1000 + Math.random() * 9000);
+
+      emergSuccessBox.innerHTML =
+        "&#10004; Urgent Alert Logged (ID: <strong>" + dispatchCode + "</strong>)! " +
+        "Our <strong>" + emergUnitInput.value + "</strong> desk is calling <strong>" + callerPhone + "</strong> immediately" +
+        (locationNote ? " for location: <em>" + locationNote + "</em>." : ".");
+      emergSuccessBox.style.display = "block";
+
+      document.getElementById("emergencyCallbackForm").reset();
+      emergUnitInput.value = "24/7 Ambulance Helpline (108)";
+    });
+
+    // Global Escape key closes any open modal
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeDepartmentModal();
+        closeDoctorModal();
+        closeHealthGuideModal();
+        closeEmergencyModal();
+      }
+    });
+
+    // =========================================================================
+    // J. LIVE APPOINTMENT FEE CALCULATOR, FORM VALIDATION & PRINTABLE SLIP
+    // =========================================================================
+    function formatMoney(amount) {
+      return "$" + amount.toFixed(2);
+    }
+
+    function recalculateAppointmentFee() {
+      const selectedDept = departmentSelect.value;
+      const selectedDocOption = doctorSelect.options[doctorSelect.selectedIndex];
+      const docName = selectedDocOption ? selectedDocOption.value : "Dr. Arjun Mehta";
+      const docFee = selectedDocOption ? (parseFloat(selectedDocOption.getAttribute("data-fee")) || 0) : 60;
+
+      // Sum checked diagnostic services
+      const checkedServices = document.querySelectorAll(".service-checkbox:checked");
+      let servicesSubtotal = 0;
+      const serviceNamesList = [];
+
+      checkedServices.forEach(function (box) {
+        servicesSubtotal += parseFloat(box.getAttribute("data-price")) || 0;
+        serviceNamesList.push(box.value);
+      });
+
+      const registrationFee = 5;
+      const grandTotal = docFee + servicesSubtotal + registrationFee;
+
+      // Update Top Selection Banner
+      bookingSelectionBanner.innerHTML =
+        "<span>&#127973; Department: <strong>" + selectedDept + "</strong></span>" +
+        "<span>&#129658; Specialist: <strong>" + docName + " ($" + docFee + " Consultation)</strong></span>";
+
+      // Update Live Fee Summary Box
+      document.getElementById("summaryDoctorLabel").textContent =
+        "Doctor Consultation (" + docName + "):";
+      document.getElementById("summaryDoctorFee").textContent = formatMoney(docFee);
+
+      document.getElementById("summaryServicesLabel").textContent =
+        "Selected Diagnostic Services (" + checkedServices.length + "):";
+      document.getElementById("summaryServicesFee").textContent = formatMoney(servicesSubtotal);
+
+      document.getElementById("summaryGrandTotal").textContent = formatMoney(grandTotal);
+
+      return {
+        department: selectedDept,
+        doctorName: docName,
+        doctorFee: docFee,
+        serviceNamesList: serviceNamesList,
+        grandTotal: grandTotal
+      };
+    }
+
+    // "Calculate Fee" Button highlights summary card
+    document.getElementById("calculateFeeBtn").addEventListener("click", function () {
+      recalculateAppointmentFee();
+      feeSummaryBox.classList.add("highlighted");
+      setTimeout(function () {
+        feeSummaryBox.classList.remove("highlighted");
+      }, 1200);
+    });
+
+    // "Confirm Appointment" Form Submission
+    const appointmentForm = document.getElementById("appointmentForm");
+    const bookingErrorAlert = document.getElementById("bookingErrorAlert");
+    const appointmentSlip = document.getElementById("appointmentSlip");
+
+    appointmentForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const fullName = document.getElementById("patientFullName").value.trim();
+      const age = document.getElementById("patientAge").value.trim();
+      const gender = document.getElementById("patientGender").value;
+      const phone = document.getElementById("patientPhone").value.trim();
+      const email = document.getElementById("patientEmail").value.trim();
+      const apptDate = appointmentDateInput.value;
+      const timeSlot = document.getElementById("timeSlotSelect").value;
+      const notes = document.getElementById("patientNotes").value.trim();
+
+      // Clean inline validation (zero browser alert popups)
+      if (!fullName || !age || Number(age) < 0 || !phone || !email || !email.includes("@") || !apptDate) {
+        bookingErrorAlert.textContent =
+          "Please fill in Patient Full Name, valid Age, Phone Number, Email Address, and Preferred Date.";
+        bookingErrorAlert.style.display = "block";
+        return;
+      }
+
+      bookingErrorAlert.style.display = "none";
+
+      const feeSummary = recalculateAppointmentFee();
+      const randomNum = Math.floor(100 + Math.random() * 900);
+      const appointmentId = "#VC-2026-" + randomNum;
+
+      // Populate Printable Hospital Appointment Slip
+      document.getElementById("slipAppointmentId").textContent = appointmentId;
+      document.getElementById("slipPatientInfo").textContent = fullName + " (" + age + " yrs, " + gender + ")";
+      document.getElementById("slipContactInfo").textContent = phone + " | " + email;
+      document.getElementById("slipDepartment").textContent = feeSummary.department;
+      document.getElementById("slipDoctor").textContent = feeSummary.doctorName;
+      document.getElementById("slipDateTime").textContent = apptDate + " (" + timeSlot + ")";
+      document.getElementById("slipServices").textContent =
+        feeSummary.serviceNamesList.length > 0 ? feeSummary.serviceNamesList.join(", ") : "None selected";
+      document.getElementById("slipNotes").textContent = notes || "None specified";
+      document.getElementById("slipTotalFee").textContent = formatMoney(feeSummary.grandTotal);
+
+      appointmentSlip.classList.add("visible");
+      appointmentSlip.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    // Slip Action 1: Print Appointment Slip
+    document.getElementById("printSlipBtn").addEventListener("click", function () {
+      window.print();
+    });
+
+    // Slip Action 2: Book Another Appointment Reset
+    document.getElementById("bookAnotherApptBtn").addEventListener("click", function () {
+      appointmentForm.reset();
+      initializeAppointmentDate();
+      departmentSelect.value = "Cardiology";
+      populateDoctorDropdownForDepartment("Cardiology", "Dr. Arjun Mehta");
+      bookingErrorAlert.style.display = "none";
+      appointmentSlip.classList.remove("visible");
+
+      serviceCheckboxes.forEach(function (box) {
+        box.checked = false;
+        syncServiceCardButtonUI(box.id, false);
+      });
+
+      recalculateAppointmentFee();
+      smoothScrollTo("#booking");
+    });
+
+    // Initialize default doctor dropdown & fee summary on page load
+    window.addEventListener("DOMContentLoaded", function () {
+      populateDoctorDropdownForDepartment("Cardiology", "Dr. Arjun Mehta");
+      recalculateAppointmentFee();
+    });
+  </script>
+
+</body>
+</html>
